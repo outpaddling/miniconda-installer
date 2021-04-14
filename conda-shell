@@ -1,3 +1,8 @@
 #!/bin/sh
 
+if [ -e /usr/local/sbin/node-type ] && [ $(/usr/local/sbin/node-type) != compute ]; then
+    printf "Error: $0 should only be run on compute nodes.\n"
+    exit 1
+fi
+
 exec /compat/linux/bin/bash
