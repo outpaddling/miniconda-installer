@@ -55,6 +55,10 @@ if [ ! -e ~/miniconda3 ]; then
 	fetch https://repo.anaconda.com/miniconda/$script
     fi
     /compat/linux/bin/sh Miniconda3-latest-Linux-x86_64.sh
+    read -p "Remove $script? [y]/n " remove
+    if [ 0"$remove" = 0y ]; then
+	rm -f $script
+    fi
 else
     printf "miniconda3 already present.  Not reinstalling.\n"
 fi
