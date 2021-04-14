@@ -1,5 +1,29 @@
 #!/bin/sh -e
 
+##########################################################################
+#   Script description:
+#       Install miniconda on a FreeBSD system
+#       
+#   History:
+#   Date        Name        Modification
+#   2018        Jason Bacon Begin
+##########################################################################
+
+usage()
+{
+    printf "Usage: $0\n"
+    exit 1
+}
+
+
+##########################################################################
+#   Main
+##########################################################################
+
+if [ $# != 0 ]; then
+    usage
+fi
+
 for dir in proc dev sys; do
     if [ ! -e /compat/linux/$dir ]; then
 	cat << EOM
