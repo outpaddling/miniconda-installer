@@ -33,8 +33,8 @@ for dir in proc dev sys; do
     if [ ! -e /compat/linux/$dir ]; then
 	cat << EOM
 
-Missing /compat/linux/$dir.  Install sysutils/auto-admin and run
-auto-install-linux_base to complete the Linux compatibility setup.
+Missing /compat/linux/$dir.  Run "pkg install auto-admin" and
+"auto-install-linux_base" as root to complete the Linux compatibility setup.
 
 EOM
 	exit 1
