@@ -1,0 +1,40 @@
+#!/bin/sh -e
+
+for dir in proc dev sys; do
+    if [ ! -e /compat/linux/$dir ]; then
+	cat << EOM
+
+Missing /compat/linux/$dir.  Install sysutils/auto-admin and run
+auto-install-linux_base to complete the Linux compatibility setup.
+
+EOM
+	exit 1
+    fi
+done
+if [ ! -e /usr/local/bin/python3.8 ]; then
+    cat << EOM
+
+This miniconda requires python3.8.  Install lang/python38 and try again.
+
+EOM
+    exit 1
+fi
+
+if [ ! -e ~/miniconda3 ]; then
+    script=Miniconda3-latest-Linux-x86_64.sh
+    if [ ! -e $script ]; then
+	fetch https://repo.anaconda.com/miniconda/$script
+    fi
+    /compat/linux/bin/sh Miniconda3-latest-Linux-x86_64.sh
+else
+    printf "miniconda3 already present.  Not reinstalling.\n"
+fi
+
+cat << EOM
+
+To use the conda environment, run /compat/linux/bin/bash.
+
+EOM
+while [ 0"$resp" != 0"got it" ]; do
+    read -p 'Type "got it" to confirm. ' resp
+done
