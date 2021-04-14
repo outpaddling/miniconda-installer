@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec /compat/linux/bin/bash
