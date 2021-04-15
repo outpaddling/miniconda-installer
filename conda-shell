@@ -1,8 +1,27 @@
 #!/bin/sh
 
+pause()
+{
+    local junk
+    
+    printf "Press return to continue..."
+    read junk
+}
+
 if [ -e /usr/local/sbin/node-type ] && [ $(/usr/local/sbin/node-type) != compute ]; then
     printf "Error: $0 should only be run on compute nodes.\n"
     exit 1
 fi
+
+cat << EOM
+
+Starting Linux bash shell to ensure that Conda packages are fully functional.
+
+Note that uname will return Linux rather than $(uname) and some other aspects
+of the environment will also indicate Linux.
+
+Type "exit" or "Ctrl+d" to return to your $(uname) shell.
+
+EOM
 
 exec /compat/linux/bin/bash
