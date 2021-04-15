@@ -56,7 +56,7 @@ if [ ! -e ~/miniconda3 ]; then
     fi
     /compat/linux/bin/sh Miniconda3-latest-Linux-x86_64.sh
     read -p "Remove $script? [y]/n " remove
-    if [ 0"$remove" = 0y ]; then
+    if [ 0"$remove" != 0n ]; then
 	rm -f $script
     fi
 else
