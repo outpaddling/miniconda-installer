@@ -24,7 +24,7 @@ if [ $# != 0 ]; then
     usage
 fi
 
-if [ -e /usr/local/sbin/node-type ] && [ $(/usr/local/sbin/node-type) != compute ]; then
+if [ -e /usr/local/sbin/node-type ] && [ 0$(/usr/local/sbin/node-type) != 0compute ]; then
     printf "Error: $0 should only be run on compute nodes.\n"
     exit 1
 fi
