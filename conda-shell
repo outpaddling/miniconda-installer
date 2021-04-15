@@ -24,4 +24,10 @@ Type "exit" or "Ctrl+d" to return to your $(uname) shell.
 
 EOM
 
-exec /compat/linux/bin/bash
+# Some tools (e.g. fastq-dump) will fail if they chose FreeBSD binaries over
+# Linux, so put the Linux binaries explicitly first in PATH.  Otherwise,
+# FreeBSD will only use tools rooted in /compat/linux if they are not found
+# in /.
+cl=/compat/linux
+export PATH=$cl/bin:$cl/usr/bin:$cl/sbin:$cl/usr/sbin:$PATH
+exec $cl/bin/bash
