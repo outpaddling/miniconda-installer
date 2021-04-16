@@ -20,6 +20,19 @@ usage()
 #   Main
 ##########################################################################
 
+if [ $(whoami) = root ]; then
+    cat << EOM
+
+miniconda-installer should not be run as root.  Conda is designed to allow
+non-root users to install software packages for their own use.
+
+Many of the community channels contain packages with little or no quality
+control or security checks.
+
+EOM
+    exit 1
+fi
+
 if [ $# != 0 ]; then
     usage
 fi
@@ -59,15 +72,15 @@ if [ ! -e ~/miniconda3 ]; then
     if [ 0"$remove" != 0n ]; then
 	rm -f $script
     fi
-else
-    printf "miniconda3 already present.  Not reinstalling.\n"
-fi
 
-cat << EOM
+    cat << EOM
 
 To use the conda environment, run "conda-shell".
 
 EOM
-while [ 0"$resp" != 0"got it" ]; do
-    read -p 'Type "got it" to confirm. ' resp
-done
+    while [ 0"$resp" != 0"got it" ]; do
+	read -p 'Type "got it" to confirm. ' resp
+    done
+else
+    printf "miniconda3 already present.  Not reinstalling.\n"
+fi

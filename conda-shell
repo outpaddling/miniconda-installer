@@ -1,16 +1,45 @@
 #!/bin/sh
 
-pause()
+##########################################################################
+#   Script description:
+#       Set up a clean Linux environment for running Conda packages.
+#       
+#   History:
+#   Date        Name        Modification
+#   2021-04-12  Jason Bacon Begin
+##########################################################################
+
+usage()
 {
-    local junk
-    
-    printf "Press return to continue..."
-    read junk
+    printf "Usage: $0\n"
+    exit 1
 }
+
+
+##########################################################################
+#   Main
+##########################################################################
+
+if [ $(whoami) = root ]; then
+    cat << EOM
+
+conda-shell should not be run as root.  Conda is designed to allow
+non-root users to install software packages for their own use.
+
+Many of the community channels contain packages with little or no quality
+control or security checks.
+
+EOM
+    exit 1
+fi
 
 if [ -e /usr/local/sbin/node-type ] && [ $(/usr/local/sbin/node-type) != compute ]; then
     printf "Error: $0 should only be run on compute nodes.\n"
     exit 1
+fi
+
+if [ $# != 0 ]; then
+    usage
 fi
 
 cat << EOM
