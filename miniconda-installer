@@ -53,6 +53,10 @@ EOM
 	exit 1
     fi
 done
+
+# FIXME: Use the mainstream FreeBSD python and download the matching
+# script from https://repo.anaconda.com/miniconda/, e.g.
+# Miniconda3-py311_25.3.1-1-MacOSX-x86_64.sh
 if [ ! -e /usr/local/bin/python3.8 ]; then
     cat << EOM
 
