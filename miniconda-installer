@@ -11,7 +11,13 @@
 
 usage()
 {
-    printf "Usage: $0\n"
+    cat << EOM
+
+Usage:      $0 python-version
+Example:    $0 3.11
+
+EOM
+    
     exit 1
 }
 
@@ -33,11 +39,13 @@ EOM
     exit 1
 fi
 
-if [ $# != 0 ]; then
+if [ $# != 1 ]; then
     usage
 fi
+python_version=$1
 
-if [ -e /usr/local/sbin/node-type ] && [ 0$(/usr/local/sbin/node-type) != 0compute ]; then
+if [ -e /usr/local/sbin/spcm-node-type ] && \
+   [ 0$(/usr/local/sbin/spcm-node-type) != 0compute ]; then
     printf "Error: $0 should only be run on compute nodes.\n"
     exit 1
 fi
@@ -57,21 +65,25 @@ done
 # FIXME: Use the mainstream FreeBSD python and download the matching
 # script from https://repo.anaconda.com/miniconda/, e.g.
 # Miniconda3-py311_25.3.1-1-MacOSX-x86_64.sh
-if [ ! -e /usr/local/bin/python3.8 ]; then
+python_version_squashed=$(echo $python_version | tr -d '.')
+if [ ! -e /usr/local/bin/python$python_version ]; then
     cat << EOM
 
-This miniconda requires python3.8.  Install lang/python38 and try again.
+This miniconda requires python$python_version.
+Install lang/python$python_version_squashed and try again.
 
 EOM
     exit 1
 fi
 
 if [ ! -e ~/miniconda3 ]; then
-    script=Miniconda3-latest-Linux-x86_64.sh
+    repo="https://repo.anaconda.com/miniconda"
+    # /Miniconda3-py311_25.3.1-1-Linux-x86_64.sh
+    script="Miniconda3-py${python_version_squashed}_25.3.1-1-Linux-x86_64.sh"
     if [ ! -e $script ]; then
-	fetch https://repo.anaconda.com/miniconda/$script
+	fetch $repo/$script
     fi
-    /compat/linux/bin/sh Miniconda3-latest-Linux-x86_64.sh
+    /compat/linux/bin/sh $script
     read -p "Remove $script? [y]/n " remove
     if [ 0"$remove" != 0n ]; then
 	rm -f $script
