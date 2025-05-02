@@ -91,7 +91,9 @@ if [ ! -e ~/miniconda3 ]; then
 
     cat << EOM
 
-To use the conda environment, run "conda-shell".
+To initialize the Linux environment under $(uname), run "conda-shell".
+
+Then run the "eval" command shown above to activate conda.
 
 EOM
     while [ 0"$resp" != 0"got it" ]; do

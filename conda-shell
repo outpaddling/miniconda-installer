@@ -33,7 +33,7 @@ EOM
     exit 1
 fi
 
-if [ -e /usr/local/sbin/node-type ] && [ $(/usr/local/sbin/node-type) != compute ]; then
+if [ -e /usr/local/sbin/spcm-node-type ] && [ $(/usr/local/sbin/spcm-node-type) != compute ]; then
     printf "Error: $0 should only be run on compute nodes.\n"
     exit 1
 fi
@@ -48,6 +48,11 @@ Starting Linux bash shell to ensure that Conda packages are fully functional.
 
 Note that uname will return Linux rather than $(uname) and some other aspects
 of the environment will also indicate Linux.
+
+To activate conda, run the "eval" command indicated during the conda
+installation, e.g.
+
+eval "$(/home/username/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)"
 
 Type "exit" or "Ctrl+d" to return to your $(uname) shell.
 
