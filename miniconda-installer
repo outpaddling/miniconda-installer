@@ -13,8 +13,12 @@ usage()
 {
     cat << EOM
 
-Usage:      $0 python-version
-Example:    $0 3.11
+Usage:      $0 python-version miniconda-version
+
+Visit https://repo.anaconda.com/miniconda/ for a list of available versions.
+Note: python-version must include the '.'.
+
+Example:    $0 3.11 25.3.1-1
 
 EOM
     
@@ -33,16 +37,17 @@ miniconda-installer should not be run as root.  Conda is designed to allow
 non-root users to install software packages for their own use.
 
 Many of the community channels contain packages with little or no quality
-control or security checks.
+control or security checks, so running as root is very dangerous.
 
 EOM
     exit 1
 fi
 
-if [ $# != 1 ]; then
+if [ $# != 2 ]; then
     usage
 fi
 python_version=$1
+miniconda_version=$2
 
 if [ -e /usr/local/sbin/spcm-node-type ] && \
    [ 0$(/usr/local/sbin/spcm-node-type) != 0compute ]; then
@@ -79,7 +84,7 @@ fi
 if [ ! -e ~/miniconda3 ]; then
     repo="https://repo.anaconda.com/miniconda"
     # /Miniconda3-py311_25.3.1-1-Linux-x86_64.sh
-    script="Miniconda3-py${python_version_squashed}_25.3.1-1-Linux-x86_64.sh"
+    script="Miniconda3-py${python_version_squashed}_$miniconda_version-Linux-x86_64.sh"
     if [ ! -e $script ]; then
 	fetch $repo/$script
     fi
