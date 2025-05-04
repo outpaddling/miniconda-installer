@@ -52,7 +52,7 @@ of the environment will also indicate Linux.
 To activate conda, run the "eval" command indicated during the conda
 installation, e.g.
 
-eval "$(/home/username/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)"
+eval "\$(/home/<username>/miniconda3/bin/conda shell.YOUR_SHELL_NAME hook)"
 
 Type "exit" or "Ctrl+d" to return to your $(uname) shell.
 
